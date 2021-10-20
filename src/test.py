@@ -8,6 +8,7 @@ class Offsets:
     health = 0x0110
     name = 0x023D
 
+
 def main():
     pml = PymemLinux.PymemLinux("assaultcube")
     base = pml.module_base("linux_64_client")
@@ -27,7 +28,6 @@ def main():
                 print(f"Name: {name} - Health: {health} - Position: {pos}")
         except:
             continue
-
 
 
 if __name__ == '__main__':
