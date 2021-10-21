@@ -10,13 +10,13 @@ class Offsets:
 
 
 def main():
-    pml = PymemLinux.PymemLinux("assaultcube")
+    pml = PymemLinux.PymemLinux("linux_64_client")
     base = pml.module_base("linux_64_client")
 
     ent_list_ptr = pml.read_int(base + Offsets.ent_list)
     for i in range(32):
-        ent_ptr = pml.read_int(ent_list_ptr + i * 8)
         try:
+            ent_ptr = pml.read_int(ent_list_ptr + i * 8)
             health = pml.read_uint(ent_ptr + Offsets.health)
             if health > 0 and health < 101:
                 pos = list()

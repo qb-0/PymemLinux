@@ -1,4 +1,4 @@
-import glob
+import os
 import memory
 
 class PymemLinux:
@@ -9,15 +9,14 @@ class PymemLinux:
             self.open_process_from_name(process_name)
 
     def open_process_from_name(self, name):
-        for p in glob.glob("/proc/*"):
+        pids = [pid for pid in os.listdir("/proc") if pid.isdigit()]
+        for pid in pids:
             try:
-                i = int(p.split("/")[2])
-                with open(f"/proc/{i}/cmdline") as o:
-                    cmd = o.readline()
-                    if name.lower() in cmd.lower():
-                        self.process_id = i
+                with open(os.path.join("/proc", pid, "cmdline")) as pf:
+                    if name.lower() in pf.read().split("\0")[0].split()[0].lower():
+                        self.process_id = int(pid)
                         return
-            except Exception as e:
+            except:
                 continue
         raise Exception("Process not found")
 
