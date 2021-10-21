@@ -5,6 +5,9 @@ class PymemLinux:
     def __init__(self, process_name=None):
         self.process_id = -1
 
+        if os.getuid() != 0:
+            raise OSError("Pymem requires root privileges")
+
         if process_name:
             self.open_process_from_name(process_name)
 
