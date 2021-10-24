@@ -35,6 +35,15 @@ class PymemLinux:
                 return int("0x" + l.split("-")[0], 0)
         raise Exception("Module not found")
 
+    def list_processes(self):
+        pids = [pid for pid in os.listdir("/proc") if pid.isdigit()]
+        for pid in pids:
+            try:
+                with open(os.path.join("/proc", pid, "cmdline")) as pf:
+                    yield (pid, pf.read().split("\0")[0].split()[0].lower())
+            except:
+                continue
+
     def read_bytes(self, address, length):
         return memory.read_bytes(self.process_id, address, length)
     
