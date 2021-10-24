@@ -12,16 +12,10 @@ class PymemLinux:
             self.open_process_from_name(process_name)
 
     def open_process_from_name(self, name):
-        pids = [pid for pid in os.listdir("/proc") if pid.isdigit()]
-        for pid in pids:
-            try:
-                with open(os.path.join("/proc", pid, "cmdline")) as pf:
-                    if name.lower() in pf.read().split("\0")[0].split()[0].lower():
-                        self.process_id = int(pid)
-                        return
-            except:
-                continue
-        raise Exception("Process not found")
+        try:
+            self.process_id = int(os.popen(f"pidof {name}").read().strip())
+        except ValueError:
+            raise Exception("Process not found")
 
     def open_process_from_id(self, id):
         self.process_id = id
