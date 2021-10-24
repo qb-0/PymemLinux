@@ -13,7 +13,7 @@ class PymemLinux:
 
     def open_process_from_name(self, name):
         try:
-            self.process_id = int(os.popen(f"pidof {name}").read().strip())
+            self.process_id = int(os.popen(f"pidof -s {name}").read().strip())
         except ValueError:
             raise Exception("Process not found")
 
