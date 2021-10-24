@@ -30,11 +30,11 @@ class PymemLinux:
         raise Exception("Module not found")
 
     def list_processes(self):
-        pids = [pid for pid in os.listdir("/proc") if pid.isdigit()]
-        for pid in pids:
+        ps = os.popen("ps -aux").read().splitlines()
+        for p in ps:
+            i = p.split()
             try:
-                with open(os.path.join("/proc", pid, "cmdline")) as pf:
-                    yield (pid, pf.read().split("\0")[0].split()[0].lower())
+                yield (int(i[1]), " ".join(i[10:]))
             except:
                 continue
 
