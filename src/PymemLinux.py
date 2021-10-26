@@ -40,7 +40,13 @@ class PymemLinux:
 
     def read_bytes(self, address, length):
         return memory.read_bytes(self.process_id, address, length)
-    
+
+    def read_vec3(self, address):
+        return memory.read_vec3(self.process_id, address)
+
+    def read_vec2(self, address):
+        return memory.read_vec2(self.process_id, address)
+
     def read_bool(self, address):
         return memory.read_bool(self.process_id, address)
     
@@ -127,3 +133,9 @@ class PymemLinux:
 
     def write_string(self, address, value):
         return memory.write_string(self.process_id, address, value)
+
+    def write_vec3(self, address, value):
+        return memory.write_vec3(self.process_id, address, value)
+        
+    def write_vec2(self, address, value):
+        return memory.write_vec2(self.process_id, address, value)
